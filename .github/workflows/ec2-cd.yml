@@ -29,9 +29,8 @@ jobs:
 
             cd /home/ubuntu/ci-cd-pipeline-MERN-docker-compose
 
-            echo "Starting containers....."
-            export IMAGE_TAG=$((${{ github.run_number }} + 1))
-            sudo docker-compose up -d --scale frontend=2 --scale backend=2 --no-recreate
+            echo "Starting containers....."           
+            sudo IMAGE_TAG=$((${{ github.run_number }} + 1)) docker-compose up -d --scale frontend=2 --scale backend=2 --no-recreate
 
             echo "Removing old frontend container..."
             FRONTEND_CONTAINER=$(sudo docker ps -q | xargs -r sudo docker inspect --format='{{.Name}}' | grep frontend | tail -n 1)
