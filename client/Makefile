@@ -2,7 +2,7 @@
 tag:=v1.0.${TAG}
 images_name:=ci-cd-mern-dc-frontend
 repository:=makaraksk
-
+ 
 all: build push
 
 build:
