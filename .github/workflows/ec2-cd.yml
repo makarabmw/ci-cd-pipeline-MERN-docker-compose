@@ -20,7 +20,15 @@ jobs:
           port: 22
           script: |
          
-            cd /home/ubuntu/ci-cd-pipeline-MERN-docker-compose || git clone https://github.com/makarabmw/ci-cd-pipeline-MERN-docker-compose.git /home/ubuntu/ci-cd-pipeline-MERN-docker-compose && cd /home/ubuntu/ci-cd-pipeline-MERN-docker-compose
+            if [ ! -d "/home/ubuntu/ci-cd-pipeline-MERN-docker-compose" ]; then
+            echo "Cloning repository..."
+                git clone https://github.com/makarabmw/ci-cd-pipeline-MERN-docker-compose.git /home/ubuntu/ci-cd-pipeline-MERN-docker-compose
+            else
+                echo "Repository exists. Pulling latest changes..."
+                cd /home/ubuntu/ci-cd-pipeline-MERN-docker-compose && git pull origin main
+            fi
+
+            cd /home/ubuntu/ci-cd-pipeline-MERN-docker-compose
           
             sudo IMAGE_TAG=$((${{github.run_number }} + 1)) docker-compose up -d --scale frontend=2 --scale backend=2 --no-recreate
             sudo docker rm -f $(sudo docker ps -q | xargs sudo docker inspect --format='{{.Name}}' | grep frontend | tail -n 1) 
