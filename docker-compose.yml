@@ -18,7 +18,7 @@ services:
 
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
-    # container_name: backend  
+    # container_name: backend image    
 
     env_file: ./.env
     environment:
