@@ -15,7 +15,6 @@ services:
     restart: always
     networks:
       - net
-
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
     # container_name: testdb   ? 
