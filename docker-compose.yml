@@ -28,7 +28,7 @@ services:
       - DB_NAME=$MONGODB_DATABASE
       - DB_PORT=$MONGODB_DOCKER_PORT
     ports:
-      - 5000:5000
+      - 5000:8080
     depends_on:
       - mongodb
     restart: always
