@@ -2,19 +2,19 @@ version: '3.8'
 
 services:
   # service name
-  nginx:
-    image: nginx
-    ports:
-      - "80:80"
-      - "5000:5000"
-    volumes:
-      - ./nginx.conf:/etc/nginx/nginx.conf
+  # nginx:
+  #   image: nginx
+  #   ports:
+  #     - "80:80"
+  #     - "5000:5000"
+  #   volumes:
+  #     - ./nginx.conf:/etc/nginx/nginx.conf
 
-    depends_on:
-      - frontend
-    restart: always
-    networks:
-      - net
+  #   depends_on:
+  #     - frontend
+  #   restart: always
+  #   networks:
+  #     - net
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
     # container_name: testdb   ? 
@@ -38,6 +38,10 @@ services:
     image: makaraksk/ci-cd-mern-dc-frontend:v1.0.${IMAGE_TAG}
     container_name: frontend
 
+    ports:
+      - "80:80"
+    volumes:
+      - ./nginx/nginx.conf:/etc/nginx/nginx.conf
     depends_on:
       - backend
     restart: always
