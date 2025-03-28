@@ -35,7 +35,9 @@ services:
 
   frontend:
     image: makaraksk/ci-cd-mern-dc-frontend:v1.0.${IMAGE_TAG}
-    # container_name: frontend
+    container_name: frontend
+    ports:
+      - 3000:3000
 
     depends_on:
       - backend
