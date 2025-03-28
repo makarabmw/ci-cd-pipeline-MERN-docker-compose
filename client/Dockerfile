@@ -16,8 +16,6 @@ COPY . .
 # Build optimise static file
 RUN npm run build
 
-EXPOSE 3000
-
 # Stage-2
 FROM nginx:1.25.2-alpine-slim
 
