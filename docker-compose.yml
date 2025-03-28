@@ -18,11 +18,12 @@ services:
 
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
+    # image: makaraksk/ci-cd-mern-dc-backend
     # container_name: backend image    
 
-    env_file: ./.env
+    env_file: .env
     environment:
-      - DB_HOST=mongodb
+      - DB_HOST=testdb
       - DB_USER=$MONGODB_USER
       - DB_PASSWORD=$MONGODB_PASSWORD
       - DB_NAME=$MONGODB_DATABASE
@@ -35,7 +36,8 @@ services:
 
   frontend:
     image: makaraksk/ci-cd-mern-dc-frontend:v1.0.${IMAGE_TAG}
-    # container_name: frontend
+    # image: makaraksk/ci-cd-mern-dc-frontend
+    container_name: frontend
 
     depends_on:
       - backend
@@ -44,17 +46,18 @@ services:
       - net
 
   # Database service
+   # Database service
   mongodb:
     image: mongo:latest
-    # container_name: mongodb
+    container_name: testdb
 
-    env_file: ./.env
+    env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
 
     volumes:
-      - ./../mydata:/data/db
+      - mydata:/data/db
 
     networks:
       - net
@@ -65,4 +68,4 @@ volumes:
 
 networks:
   net:
-    external: true
+    driver: bridge

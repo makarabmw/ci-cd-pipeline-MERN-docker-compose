@@ -14,7 +14,12 @@ const {
   DB_NAME,
 } = process.env;
 
-const MONGO_URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}/${DB_NAME}?authSource=admin`
+console.log(  DB_USER,
+  DB_PASSWORD,
+  DB_HOST,
+  DB_PORT,'------->');
+
+const MONGO_URI = `mongodb://${DB_USER}:${DB_PASSWORD}@${DB_HOST}:${DB_PORT}`
 
 // Connect DB
 mongoose
