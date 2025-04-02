@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # service name
+  # service name?
   nginx:
     image: nginx
     ports:
@@ -18,7 +18,7 @@ services:
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
     # image: makaraksk/ci-cd-mern-dc-backend
-    # container_name: backend image    
+    container_name: backend 
 
     env_file: .env
     environment:
@@ -38,7 +38,7 @@ services:
   frontend:
     image: makaraksk/ci-cd-mern-dc-frontend:v1.0.${IMAGE_TAG}
     # image: makaraksk/ci-cd-mern-dc-frontend
-    # container_name: frontend
+    container_name: frontend
 
     ports:
       - 80:3000
@@ -47,9 +47,8 @@ services:
     restart: always
     networks:
       - net
-
+      
   # Database service
-   # Database service
   mongodb:
     image: mongo:latest
     container_name: testdb
