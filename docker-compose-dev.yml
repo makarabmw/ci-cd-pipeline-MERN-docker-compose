@@ -17,13 +17,11 @@ services:
       - net
 
   backend:
-    image: be
+    image: backend
     build:
       context: ./server
       dockerfile: Dockerfile
-    # image: makaraksk/ci-cd-mern-dc-backend
     # container_name: backend image    
-
     env_file: .env
     environment:
       - DB_HOST=testdb
@@ -44,7 +42,6 @@ services:
       dockerfile: Dockerfile
     # image: makaraksk/ci-cd-mern-dc-frontend
     # container_name: frontend
-
     depends_on:
       - backend
     restart: always
@@ -56,13 +53,10 @@ services:
   mongodb:
     image: mongo:latest
     container_name: testdb
-
     env_file: .env
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-
-
     networks:
       - net
 
