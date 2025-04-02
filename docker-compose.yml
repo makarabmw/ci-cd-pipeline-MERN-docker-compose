@@ -4,6 +4,7 @@ services:
   # all service name 
   nginx:
     image: nginx
+    container_name: nginx
     ports:
       - "80:80"
       - "5000:5000"
@@ -17,12 +18,10 @@ services:
 
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
+    container_name: backend    
     #build:
       #context: ./server
       #dockerfile: Dockerfile
-    # image: makaraksk/ci-cd-mern-dc-backend
-    # container_name: backend image    
-
     env_file: .env
     environment:
       - DB_HOST=testdb
@@ -43,7 +42,7 @@ services:
     #build:
       #context: ./client
       #dockerfile: Dockerfile
-    # container_name: frontend 
+    container_name: frontend 
     depends_on:
       - backend
     restart: always
