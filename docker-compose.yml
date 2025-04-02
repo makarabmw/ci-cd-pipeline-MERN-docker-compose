@@ -1,7 +1,7 @@
 version: '3.8'
 
 services:
-  # service name?
+  # service name
   nginx:
     image: nginx
     ports:
@@ -9,16 +9,19 @@ services:
       - "5000:5000"
     volumes:
       - ./nginx.conf:/etc/nginx/nginx.conf
-
     depends_on:
       - frontend
     restart: always
     networks:
       - net
+
   backend:
     image: makaraksk/ci-cd-mern-dc-backend:v1.0.${IMAGE_TAG}
+    #build:
+      #context: ./server
+      #dockerfile: Dockerfile
     # image: makaraksk/ci-cd-mern-dc-backend
-    container_name: backend 
+    # container_name: backend image    
 
     env_file: .env
     environment:
@@ -27,19 +30,21 @@ services:
       - DB_PASSWORD=$MONGODB_PASSWORD
       - DB_NAME=$MONGODB_DATABASE
       - DB_PORT=$MONGODB_DOCKER_PORT
-    ports:
-      - 5000:8080
     depends_on:
       - mongodb
     restart: always
+    ports:
+      - 5000:8080
     networks:
       - net
 
   frontend:
     image: makaraksk/ci-cd-mern-dc-frontend:v1.0.${IMAGE_TAG}
+    #build:
+      #context: ./client
+      #dockerfile: Dockerfile
     # image: makaraksk/ci-cd-mern-dc-frontend
-    container_name: frontend
-
+    # container_name: frontend
     ports:
       - 80:3000
     depends_on:
@@ -47,8 +52,9 @@ services:
     restart: always
     networks:
       - net
-      
+
   # Database service
+   # Database service
   mongodb:
     image: mongo:latest
     container_name: testdb
@@ -57,10 +63,6 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=$MONGODB_USER
       - MONGO_INITDB_ROOT_PASSWORD=$MONGODB_PASSWORD
-
-    volumes:
-      - mydata:/data/db
-
     ports:
       - 27017:27017
     networks:
