@@ -16,5 +16,5 @@ COPY . .
 # Open the port for express server
 EXPOSE 5000
 
-# Run express rum in foreground
+# Run express rum in foreground test
 CMD ["npm", "start"]
