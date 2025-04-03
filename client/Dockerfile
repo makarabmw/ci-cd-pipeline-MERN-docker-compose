@@ -1,29 +1,28 @@
-# Stage-1 & spacify a name 'builder'
-FROM  node:latest AS builder
+# Stage 1 - Build React App
+FROM node:latest AS builder
 
-# Create a directory  and go to directory 
 WORKDIR /app
 
-# Copy the package.json file to my current directory for install necessary dependence  
-COPY package.json .
+# Copy only package.json and package-lock.json first (to leverage caching)
+COPY package.json package-lock.json ./
 
-# Install the dependence
+# Install dependencies
 RUN npm install
 
-# Copy other file to my current directory
+# Copy the rest of the app
 COPY . .
 
-# Build optimise static file
+# Build optimized production files
 RUN npm run build
 
-# Stage-2
+# Stage 2 - Serve React App with Nginx
 FROM nginx:1.25.2-alpine-slim
 
-# Copy static file to my nignx folder for serve static contain
+# Copy build output to Nginx's HTML folder
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Open the port for react
+# Expose port
 EXPOSE 80
 
-# Run nginx in foreground test
+# Run Nginx in foreground
 CMD ["nginx", "-g", "daemon off;"]
