@@ -1,28 +1,33 @@
-# Stage 1 - Build React App
-FROM node:latest AS builder
+# stage-1 & specify the base image 
+FROM node:23-alpine3.20 AS builder
 
+# create a directory for the app and go to the directory
 WORKDIR /app
 
-# Copy only package.json and package-lock.json first (to leverage caching)
+# copy the package.json and package-lock.json files to the app directory to install necessary dependencies
 COPY package.json package-lock.json ./
 
-# Install dependencies
+# install the dependencies
 RUN npm install
 
-# Copy the rest of the app
+# copy the rest of the app files to the app directory
 COPY . .
 
-# Build optimized production files
+# build the app
 RUN npm run build
 
-# Stage 2 - Serve React App with Nginx
-FROM nginx:1.25.2-alpine-slim
+# stage-2 & specify the base image
+FROM nginx:1.25.2-alpine-slim 
 
-# Copy build output to Nginx's HTML folder
+# copy the build files from the builder stage to the nginx html directory
 COPY --from=builder /app/build /usr/share/nginx/html
 
-# Expose port
+# expose the port 80 for the nginx server
 EXPOSE 80
 
-# Run Nginx in foreground
+# start the nginx server
 CMD ["nginx", "-g", "daemon off;"]
+
+# end of Dockerfile
+
+

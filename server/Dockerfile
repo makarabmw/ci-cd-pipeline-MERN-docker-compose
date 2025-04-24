@@ -1,20 +1,22 @@
-# Select a base image
-FROM  node:20-alpine3.17
+# select a base image 
+FROM node:20-alpine3.17
 
-# Create a directory  and go to directory test
+# create a directory for the app and go to the directory
 WORKDIR /app
 
-# Copy the package.json file to my current directory for install necessary dependence  
+# copy the package.json and package-lock.json files to the app directory to install necessary dependencies
 COPY package.json package-lock.json ./
 
-# Install the dependence
+# install the dependencies
 RUN npm install
 
-# Copy other file to my current directory
+# copy the rest of the app files to the app directory
 COPY . .
 
-# Open the port for express server
+# open the port 5000 for the server
 EXPOSE 5000
 
-# Run express rum in foreground test
+# run express server on port 5000
 CMD ["npm", "start"]
+
+# end of Dockerfile

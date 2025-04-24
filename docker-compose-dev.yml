@@ -48,7 +48,6 @@ services:
     networks:
       - net
 
-  # Database service
    # Database service
   mongodb:
     image: mongo:latest
